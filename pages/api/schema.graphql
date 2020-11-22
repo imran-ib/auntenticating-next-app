@@ -7,6 +7,9 @@ type Mutation {
   deletePost(postId: String): Post
   publish(postId: String): Post
   signupUser(email: String!, name: String, password: String!): User!
+
+  """User Sign in"""
+  userLogin(email: String, password: String): String
 }
 
 type Post {
@@ -22,6 +25,7 @@ type Query {
   feed: [Post!]!
   filterPosts(searchString: String): [Post!]!
   post(postId: String!): Post!
+  posts: [Post!]
 }
 
 type User {

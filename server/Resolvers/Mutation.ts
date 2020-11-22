@@ -1,5 +1,6 @@
 import { objectType, stringArg } from "@nexus/schema";
 import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -69,6 +70,30 @@ export const Mutation = objectType({
           where: { id: Number(postId) },
           data: { published: true },
         });
+      },
+    });
+    t.field("userLogin", {
+      type: "String",
+      args: {
+        email: stringArg(),
+        password: stringArg(),
+      },
+      nullable: true,
+      description: "User Sign in",
+      resolve: async (parent, args, ctx) => {
+        try {
+          const User = await prisma.user.findOne({
+            where: {
+              email: args.email,
+            },
+          });
+
+          if (!User) throw new Error(`Authorization failed`);
+          const token = jwt.sign({ UserId: User.id }, "MyNewApp");
+          return token;
+        } catch (error) {
+          console.log("definition -> error", error);
+        }
       },
     });
   },

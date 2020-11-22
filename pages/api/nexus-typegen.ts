@@ -57,6 +57,7 @@ export interface NexusGenFieldTypes {
     deletePost: NexusGenRootTypes['Post'] | null; // Post
     publish: NexusGenRootTypes['Post'] | null; // Post
     signupUser: NexusGenRootTypes['User']; // User!
+    userLogin: string | null; // String
   }
   Post: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -70,6 +71,7 @@ export interface NexusGenFieldTypes {
     feed: NexusGenRootTypes['Post'][]; // [Post!]!
     filterPosts: NexusGenRootTypes['Post'][]; // [Post!]!
     post: NexusGenRootTypes['Post']; // Post!
+    posts: NexusGenRootTypes['Post'][] | null; // [Post!]
   }
   User: { // field return type
     email: string; // String!
@@ -96,6 +98,10 @@ export interface NexusGenArgTypes {
       email: string; // String!
       name?: string | null; // String
       password: string; // String!
+    }
+    userLogin: { // args
+      email?: string | null; // String
+      password?: string | null; // String
     }
   }
   Query: {

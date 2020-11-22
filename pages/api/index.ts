@@ -1,6 +1,8 @@
 import { ApolloServer } from "apollo-server-micro";
+import { applyMiddleware } from "graphql-middleware";
 import { schema } from "../../server/Schema";
 import { createContext } from "./context";
+import { permissions } from "./permissions";
 
 export const config = {
   api: {
@@ -9,7 +11,7 @@ export const config = {
 };
 
 const server = new ApolloServer({
-  schema,
+  schema: applyMiddleware(schema, permissions),
   context: createContext,
 });
 
