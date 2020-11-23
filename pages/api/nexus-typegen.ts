@@ -67,6 +67,7 @@ export interface NexusGenFieldTypes {
     title: string; // String!
   }
   Query: { // field return type
+    CurrentUser: NexusGenRootTypes['User'] | null; // User
     drafts: NexusGenRootTypes['Post'][]; // [Post!]!
     feed: NexusGenRootTypes['Post'][]; // [Post!]!
     filterPosts: NexusGenRootTypes['Post'][]; // [Post!]!

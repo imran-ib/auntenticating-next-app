@@ -1,11 +1,25 @@
 import { objectType, stringArg } from "@nexus/schema";
 import { PrismaClient } from "@prisma/client";
+import { getUserId } from "../../utils/decodejwt";
 
 const prisma = new PrismaClient();
 
 export const Query = objectType({
   name: "Query",
   definition(t) {
+    t.field("CurrentUser", {
+      type: "User",
+      nullable: true,
+      //@ts-ignore
+      resolve: async (_root, _agrs, ctx) => {
+        const userId = parseInt(getUserId(ctx));
+
+        if (!userId) return;
+        return ctx.prisma.user.findOne({
+          where: { id: userId },
+        });
+      },
+    });
     t.field("posts", {
       type: "Post",
       list: true,

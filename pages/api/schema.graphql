@@ -21,6 +21,7 @@ type Post {
 }
 
 type Query {
+  CurrentUser: User
   drafts: [Post!]!
   feed: [Post!]!
   filterPosts(searchString: String): [Post!]!
